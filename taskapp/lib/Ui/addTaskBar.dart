@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:taskapp/Ui/theme.dart';
 import 'package:taskapp/Ui/widgets/button.dart';
 import 'package:taskapp/Ui/widgets/inputField.dart';
+import 'package:taskapp/controllers/taskController.dart';
+import 'package:taskapp/models/task.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key});
@@ -14,6 +16,8 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+
+  final TaskController taskController = Get.put(TaskController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
 
@@ -178,6 +182,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   validateData() {
     if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
+      addTaskToDb();
       Get.back();
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
       Get.snackbar("Required", "Missing Fields",
@@ -230,6 +235,23 @@ class _AddTaskPageState extends State<AddTaskPage> {
       ],
     );
   }
+
+
+  addTaskToDb() async{
+   await taskController.addTask(
+        task: Task(
+            note: _noteController.text,
+            title: _titleController.text,
+            date: DateFormat.yMd().format(selectedDate),
+            startTime: startTime,
+            endTime: endTime,
+            remind: selectedRemind,
+            repeat: selectedRepeat,
+            isCompleted: 0
+        )
+    );
+  }
+
 
   _appBar(BuildContext context) {
     return AppBar(

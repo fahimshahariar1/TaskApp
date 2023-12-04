@@ -35,10 +35,15 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  get_storage:
-  get:
-  flutter_local_notifications:
-  flutter_native_timezone:
+  get_storage: ^2.1.1
+  get: ^4.6.6
+  flutter_local_notifications: ^16.2.0
+  flutter_native_timezone_updated_gradle: ^2.0.3
+  intl:
+  google_fonts:
+  date_picker_timeline:
+  sqflite: 
+
 
 dev_dependencies:
   flutter_test:
@@ -63,9 +68,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+     - images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

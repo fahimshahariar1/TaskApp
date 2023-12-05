@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+
 import 'package:intl/intl.dart';
 import 'package:taskapp/Ui/theme.dart';
 import 'package:taskapp/Ui/widgets/button.dart';
@@ -51,12 +52,12 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 "Add Task",
                 style: headinStyle,
               ),
-               MyInputField(
+              MyInputField(
                 title: "Title",
                 hint: "Enter Your Title",
                 controller: _titleController,
               ),
-               MyInputField(
+              MyInputField(
                 title: 'Task',
                 hint: 'Enter Your Task',
                 controller: _noteController,
@@ -114,7 +115,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ),
                   style: subTitleStyle,
                   items: remindList.map<DropdownMenuItem<String>>(
-                    (int value) {
+                        (int value) {
                       return DropdownMenuItem<String>(
                         value: value.toString(),
                         child: Text(value.toString()),
@@ -143,7 +144,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ),
                   style: subTitleStyle,
                   items: repeatList.map<DropdownMenuItem<String>>(
-                    (value) {
+                        (value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -206,39 +207,39 @@ class _AddTaskPageState extends State<AddTaskPage> {
         ),
         Wrap(
             children: List<Widget>.generate(3, (index) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedColor = index;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(
-                radius: 14,
-                backgroundColor: index == 0
-                    ? primaryClr
-                    : index == 1
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedColor = index;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: CircleAvatar(
+                    radius: 14,
+                    backgroundColor: index == 0
+                        ? primaryClr
+                        : index == 1
                         ? pinkClr
                         : yellowClr,
-                child: selectedColor == index
-                    ? Icon(
-                        Icons.done,
-                        color: Colors.white,
-                        size: 16,
-                      )
-                    : Container(),
-              ),
-            ),
-          );
-        })),
+                    child: selectedColor == index
+                        ? Icon(
+                      Icons.done,
+                      color: Colors.white,
+                      size: 16,
+                    )
+                        : Container(),
+                  ),
+                ),
+              );
+            })),
       ],
     );
   }
 
 
   addTaskToDb() async{
-   await taskController.addTask(
+    await taskController.addTask(
         task: Task(
             note: _noteController.text,
             title: _titleController.text,
@@ -288,22 +289,23 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   getTimeFromUser({required bool isStartTime}) async {
     var pickedTime = await _showTimePicker();
-    String formatedTime = pickedTime.format(context);
+    String formattedTime = pickedTime!.format(context);
 
     if (pickedTime == null) {
+      // Handle null case if needed
     } else if (isStartTime == true) {
       setState(() {
-        startTime = formatedTime;
+        startTime = formattedTime;
       });
     } else if (isStartTime == false) {
       setState(() {
-        endTime = formatedTime;
+        endTime = formattedTime;
       });
     }
   }
 
-  _showTimePicker() {
-    return showTimePicker(
+  _showTimePicker() async {
+    return await showTimePicker(
       context: context,
       initialEntryMode: TimePickerEntryMode.input,
       initialTime: TimeOfDay(
